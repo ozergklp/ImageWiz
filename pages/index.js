@@ -1,6 +1,10 @@
 import { useState } from "react";
 import Head from "next/head";
 import Image from "next/image";
+import React from "react";
+
+import { FaHatWizard, FaPaintbrush } from "react-icons/fa6";
+import Loading from "./components/Loading";
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
@@ -43,24 +47,31 @@ export default function Home() {
   };
 
   return (
-    <div className="container max-w-2xl mx-auto p-5">
+    <div className="container mt-5  mx-auto flex flex-col items-center p-5">
       <Head>
-        <title>AI Web App</title>
+        <title>AI Image Generator</title>
       </Head>
 
-      <h1 className="py-6 text-center font-bold text-2xl">
-        Enter your prompt!
-      </h1>
 
-      <form className="w-full flex" onSubmit={handleSubmit}>
+      <header className="flex text-4xl  justify-center">
+        <FaHatWizard />
+        <h1 className="ml-1 pt-1">
+          ImageWiz
+        </h1>
+      </header>
+
+    
+
+      <form className=" bg-white flex mt-7 p-2 rounded-xl shadow-md w-full justify-center md:w-[500px] shadow-slate-400" onSubmit={handleSubmit}>
         <input
           type="text"
-          className="flex-grow"
+          className="flex-grow ml-1 bg-white outline-none pl-2 p-1 rounded-xl"
           name="prompt"
-          placeholder="Enter a prompt to display an image"
+          placeholder="Imagine..."
+          autoComplete="off"
         />
-        <button className="button" type="submit">
-          Submit
+        <button  className=" ml-2 hover:shadow-sm rounded-xl  hover:shadow-slate-400 text-xl p-1 px-2  cursor-pointer" type="submit">
+          <FaPaintbrush />
         </button>
       </form>
 
@@ -68,20 +79,24 @@ export default function Home() {
 
       {prediction && (
         <>
+
           {prediction.output && (
-            <div className="image-wrapper mt-5">
+            <div className="image-wrapper mt-5 rounded-xl">
               <Image
-                className=""
+                className="rounded-xl"
                 src={prediction.output[prediction.output.length - 1]}
                 alt="output"
                 height={1000}
                 width={500}
               />
             </div>
-          )}
-          <p className="py-3 text-sm opacity-50">status: {prediction.status}</p>
+          )}      
         </>
       )}
+      {(prediction && prediction.status === 'processing' ) && <Loading />}
+      {(prediction && prediction.status === 'starting' ) && <Loading />}
     </div>
   );
 }
+
+//<p className="py-3 text-sm opacity-50">status: {prediction.status}</p>

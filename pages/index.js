@@ -62,7 +62,7 @@ export default function Home() {
 
     
 
-      <form className=" bg-white flex mt-7 p-2 rounded-xl shadow-md w-full justify-center md:w-[500px] shadow-slate-400" onSubmit={handleSubmit}>
+      <form className=" bg-white flex mt-7 p-2 rounded-xl shadow-md w-11/12 justify-center sm:w-[500px] shadow-slate-400" onSubmit={handleSubmit}>
         <input
           type="text"
           className="flex-grow ml-1 bg-white outline-none pl-2 p-1 rounded-xl"
@@ -83,18 +83,19 @@ export default function Home() {
           {prediction.output && (
             <div className="image-wrapper mt-5 rounded-xl">
               <Image
-                className="rounded-xl"
+                className="rounded-xl w-[420px] sm:w-[500px]"
                 src={prediction.output[prediction.output.length - 1]}
                 alt="output"
                 height={1000}
                 width={500}
               />
-            </div>
+             </div>
           )}      
         </>
       )}
       {(prediction && prediction.status === 'processing' ) && <Loading />}
       {(prediction && prediction.status === 'starting' ) && <Loading />}
+      
     </div>
   );
 }
